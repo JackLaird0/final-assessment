@@ -30,5 +30,35 @@ describe('Client Routes', () => {
 });
 
 describe('API Routes', () => {
-  
+  beforeEach( done => {
+    knex.migrate.rollback()
+      .then(() => {
+        knex.migrate.latest()
+          .then(() => {
+            return knex.seed.run()
+              .then(() => {
+                done();
+              });
+          });
+      });
+  });
+
+  describe('GET /api/v1/items', () => {
+    it('should return an array of item objects', done => {
+      chai.request(server)
+        .get('/api/v1/items')
+        .end((err, resp) => {
+          resp.should.have.status(200);
+          resp.should.be.json;
+          resp.body.should.be.a('array');
+          resp.body[0].should.have.property('id');
+          resp.body[0].id.should.equal(1);
+          resp.body[0].should.have.property('name');
+          resp.body[0].name.should.equal('item 1');
+          resp.body[0].should.have.property('status');
+          resp.body[0].status.should.equal(false);
+          done();
+        })
+    })
+  });
 });
