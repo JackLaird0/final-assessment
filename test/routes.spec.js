@@ -119,10 +119,23 @@ describe('API Routes', () => {
         item: {} 
       })
       .end((err, resp) => {
-        resp.should.have.status(422)
+        resp.should.have.status(422);
         resp.body.error.should.equal(`Expected format: { item: { name: <String>, status: <Boolean> }} You're missing a name property.`);
         done();
-      })
-    })
+      });
+    });
+  });
+
+  describe('DELETE /api/v1/items/:id', () => {
+    it('should return the id of the item that was deleted', done => {
+      chai.request(server)
+      .delete('/api/v1/items/1')
+      .end((err, resp) => {
+        resp.should.have.status(202);
+        resp.body.should.have.property('id');
+        resp.body.id.should.equal('1');
+        done();
+      });
+    });
   });
 });
