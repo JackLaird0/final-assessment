@@ -43,17 +43,16 @@ app.put('/api/v1/items/:id', (req, resp) => {
   const { id } = req.params;
   const { item } = req.body;
 
-  for(let requiredParam of ['name', 'status']) {
+  for(let requiredParam of ['status']) {
     if(!item[requiredParam]) {
       return resp.status(422)
-        .send({ error: `Expected format: { item: { name: <String>, status: <Boolean> }} You\'re missing a ${requiredParam} property.`})
+        .send({ error: `Expected format: { item: {status: <Boolean> }} You\'re missing a ${requiredParam} property.`})
     }
   }
 
-  const {name, status} = item;
+  const {status} = item;
   database('items').where('id', id)
     .update({
-      name,
       status
     })
     .then(() => {
