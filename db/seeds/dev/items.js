@@ -1,13 +1,11 @@
 
 exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
+  return knex('items').del()
     .then(function () {
-      // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
-      ]);
-    });
+      return Promise.all([
+        knex('items').insert({name: 'item 1', status: false})
+      ])
+      .then(() => console.log('Seeding Complete!'))
+    })
+    .catch(error => console.log(`Error seedong data: ${error}`))
 };
