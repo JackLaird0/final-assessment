@@ -91,4 +91,25 @@ describe('API Routes', () => {
         });
     });
   });
+
+  describe('PUT /api/v1/items/:id', () => {
+    it('should return the item object with the updated data', done => {
+      chai.request(server)
+      .put('/api/v1/items/1')
+      .send({
+        item: { name: 'test item', status: true }
+      })
+      .end((err, resp) => {
+        resp.should.have.status(201);
+        resp.body.should.be.a('object');
+        resp.body.should.have.property('name')
+        resp.body.name.should.equal('test item')
+        resp.body.should.have.property('status')
+        resp.body.status.should.equal(true)
+        resp.body.should.have.property('id')
+        resp.body.id.should.equal('1')
+        done();
+      });
+    });
+  });
 });
