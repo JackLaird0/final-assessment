@@ -77,5 +77,18 @@ describe('API Routes', () => {
           done();
         });
     });
+
+    it('should return an error if the body is incorrect', done => {
+      chai.request(server)
+        .post('/api/v1/items')
+        .send({
+          item: {}
+        })
+        .end((err, resp) => {
+          resp.should.have.status(422);
+          resp.body.error.should.equal(`Expected format: { item: { name: <String>, status: <Boolean> }} You're missing a name property.`);
+          done();
+        });
+    });
   });
 });
