@@ -37,6 +37,8 @@ const sumbitItem = async (e) => {
   const itemId = await response.json()
   item.id = itemId.id;
   prependItems(item);
+  $('.item-input').val('');
+  $('.item-input').focus();
 }
 
 const deleteItem = function() {
