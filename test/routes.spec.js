@@ -16,10 +16,19 @@ describe('Client Routes', () => {
         resp.should.have.status(200);
         resp.should.be.html;
         done();
-      })
-  })
-})
+      });
+  });
+
+  it('should return a 404 status code for an endpoint that doesn\'t exist', done => {
+    chai.request(server)
+      .get('/fake')
+      .end((err, resp) => {
+        resp.should.have.status(404);
+        done();
+      });
+  });
+});
 
 describe('API Routes', () => {
 
-})
+});
