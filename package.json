@@ -1,0 +1,32 @@
+{
+  "name": "final-assessment",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "NODE_ENV=test mocha --exit",
+    "lint": "./node_modules/eslint/bin/eslint.js ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackLaird0/final-assessment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JackLaird0/final-assessment/issues"
+  },
+  "homepage": "https://github.com/JackLaird0/final-assessment",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "express": "^4.16.3",
+    "knex": "^0.15.0",
+    "mocha": "^5.2.0",
+    "pg": "^7.4.3"
+  },
+  "devDependencies": {},
+  "description": ""
+}
