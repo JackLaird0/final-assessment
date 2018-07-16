@@ -58,7 +58,24 @@ describe('API Routes', () => {
           resp.body[0].should.have.property('status');
           resp.body[0].status.should.equal(false);
           done();
+        });
+    });
+  });
+
+  describe('POST /api/v1/items', () => {
+    it('should create a new item', done => {
+      chai.request(server)
+        .post('/api/v1/items')
+        .send({
+          item: { name: 'test item', status: 'false' }
         })
-    })
+        .end((err, resp) => {
+          resp.should.have.status(201);
+          resp.body.should.be.a('object');
+          resp.body.should.have.property('id');
+          resp.body.id.should.equal(3);
+          done();
+        });
+    });
   });
 });
