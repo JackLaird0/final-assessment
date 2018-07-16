@@ -68,13 +68,11 @@ const deleteItem = function() {
 const toggleStatus = function() {
   const itemId = $(this).closest('.item')[0].classList[1].split('-')[1];
   let currentStatus = $(this)[0].classList[1].split('-')[1];
-  debugger
   if(currentStatus === false || currentStatus === 'false') {
     currentStatus = 'true'
   } else {
     currentStatus = 'false'
   }
-  console.log(currentStatus)
   
   fetch(`/api/v1/items/${itemId}`, {
     method: 'PUT',
