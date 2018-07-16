@@ -1,6 +1,7 @@
 $(document).ready(function() {
   $(document).ready(fetchItems);
-  $('.submit').on('click', sumbitItem)
+  $('.submit').on('click', sumbitItem);
+  $('.items-container').on('click', '.delete-item', deleteItem)
 })
 
 const fetchItems = async () => {
@@ -13,7 +14,7 @@ const fetchItems = async () => {
 
 const prependItems = item => {
   $('.items-container').prepend(`
-    <div class="item">
+    <div class="item item-${item.id}">
       <h2 class="item-name">${item.name}</h2>
       <button class="delete-item">Delete</button>
       <input type="checkbox" name="packed" id="packed">
@@ -33,6 +34,18 @@ const sumbitItem = async (e) => {
     },
     body: JSON.stringify({ item })
   });
-
+  const itemId = await response.json()
+  item.id = itemId.id;
   prependItems(item);
+}
+
+const deleteItem = function() {
+  const itemId = $(this).closest('.item')[0].classList[1].split('-')[1];
+  fetch(`/api/v1/items/${itemId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-type': 'application/json'
+    }
+  })
+  $(this).closest('.item')[0].remove();
 }
