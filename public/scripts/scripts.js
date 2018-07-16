@@ -14,7 +14,6 @@ const fetchItems = async () => {
 }
 
 const prependItems = item => {
-  console.log(item)
   if (item.status === true) {
     $('.items-container').prepend(`
       <div class="item item-${item.id}">
