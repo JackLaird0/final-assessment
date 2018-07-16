@@ -120,7 +120,7 @@ describe('API Routes', () => {
       })
       .end((err, resp) => {
         resp.should.have.status(422);
-        resp.body.error.should.equal(`Expected format: { item: { name: <String>, status: <Boolean> }} You're missing a name property.`);
+        resp.body.error.should.equal(`Expected format: { item: {status: <Boolean> }} You're missing a status property.`);
         done();
       });
     });
