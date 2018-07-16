@@ -79,3 +79,5 @@ app.delete('/api/v1/items/:id', (req, resp) => {
 app.listen(app.get('port'), () => {
   console.log(`Mars Bars is running on ${app.get('port')}`);
 })
+
+module.exports = app;
