@@ -102,14 +102,27 @@ describe('API Routes', () => {
       .end((err, resp) => {
         resp.should.have.status(201);
         resp.body.should.be.a('object');
-        resp.body.should.have.property('name')
-        resp.body.name.should.equal('test item')
-        resp.body.should.have.property('status')
-        resp.body.status.should.equal(true)
-        resp.body.should.have.property('id')
-        resp.body.id.should.equal('1')
+        resp.body.should.have.property('name');
+        resp.body.name.should.equal('test item');
+        resp.body.should.have.property('status');
+        resp.body.status.should.equal(true);
+        resp.body.should.have.property('id');
+        resp.body.id.should.equal('1');
         done();
       });
     });
+
+    it('should return an error if the body is incorrect', done => {
+      chai.request(server)
+      .put('/api/v1/items/1')
+      .send({
+        item: {} 
+      })
+      .end((err, resp) => {
+        resp.should.have.status(422)
+        resp.body.error.should.equal(`Expected format: { item: { name: <String>, status: <Boolean> }} You're missing a name property.`);
+        done();
+      })
+    })
   });
 });
