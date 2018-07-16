@@ -17,7 +17,7 @@ app.get('/api/v1/items', (req, resp) => {
     })
     .catch( error => {
       resp.status(500).json({ error })
-    })
+    });
 });
 
 app.post('/api/v1/items', (req, resp) => {
@@ -36,9 +36,34 @@ app.post('/api/v1/items', (req, resp) => {
     })
     .catch(error => {
       resp.status(500).json({ error })
+    });
+});
+
+app.put('/api/v1/items/:id', (req, resp) => {
+  const { id } = req.params;
+  const { item } = req.body;
+
+  for(let requiredParam of ['name', 'status']) {
+    if(!item[requiredParam]) {
+      return resp.status(422)
+        .send({ error: `Expected format: { item: { name: <String>, status: <Boolean> }} You\'re missing a ${requiredParam} property.`})
+    }
+  }
+
+  const {name, status} = item;
+  database('items').where('id', id)
+    .update({
+      name,
+      status
     })
-})
+    .then(() => {
+      resp.status(201).json({...item, id})
+    })
+    .catch( error => {
+      resp.status(500).json({ error })
+    })
+});
 
 app.listen(app.get('port'), () => {
-  console.log(`Mars Bars is running on ${app.get('port')}`)
+  console.log(`Mars Bars is running on ${app.get('port')}`);
 })
