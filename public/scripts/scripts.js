@@ -1,5 +1,6 @@
 $(document).ready(function() {
-  $(document).ready(fetchItems)
+  $(document).ready(fetchItems);
+  $('.submit').on('click', sumbitItem)
 })
 
 const fetchItems = async () => {
@@ -19,4 +20,19 @@ const prependItems = item => {
       <label for="packed">Packed</label>
     </div>
   `)
+}
+
+const sumbitItem = async (e) => {
+  e.preventDefault();
+  const itemName = $('.item-input').val();
+  const item = {name: itemName, status: 'false'};
+  const response = await fetch('api/v1/items', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify({ item })
+  });
+
+  prependItems(item);
 }
