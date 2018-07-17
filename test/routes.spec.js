@@ -137,5 +137,16 @@ describe('API Routes', () => {
         done();
       });
     });
+
+    it('should return a 404 if the id doesn\'t exist', done => {
+      chai.request(server)
+        .delete('/api/v1/items/234')
+        .end((err, resp) => {
+          resp.should.have.status(404);
+          resp.body.should.have.property('error');
+          resp.body.error.should.equal('An Item with that ID does not exist');
+          done();
+        });
+    });
   });
 });
