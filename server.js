@@ -67,8 +67,12 @@ app.delete('/api/v1/items/:id', (req, resp) => {
   const { id } = req.params;
 
   database('items').where('id', id).del()
-    .then(() => {
-      resp.status(202).json({ id})
+    .then(deletedItem => {
+      if( deletedItem === 0) {
+        resp.status(404).json({ error: "An Item with that ID does not exist"})
+      } else {
+        resp.status(202).json({ id})
+      }
     })
     .catch( error => {
       resp.status(404).json({ error })
